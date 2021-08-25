@@ -1,0 +1,1564 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sulakore</name>
+    </assembly>
+    <members>
+        <member name="T:Sulakore.Communication.InterceptedEventArgs">
+            <summary>
+            Represents an intercepted message that will be returned to the caller with blocking/replacing information.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.InterceptedEventArgs.Step">
+            <summary>
+            Gets the current count/step/order from which this data was intercepted.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.InterceptedEventArgs.IsAsyncCapable">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> can be turned into a non-blocking operation by calling <see cref="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.InterceptedEventArgs.Packet">
+            <summary>
+            Gets the intercepted <see cref="T:Sulakore.Habbo.Protocol.HMessage"/> that allows for read/write operations.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.InterceptedEventArgs.Continuation">
+            <summary>
+            Gets the <see cref="T:System.Func`1"/> of type <see cref="T:System.Threading.Tasks.Task"/> that will be invoked when <see cref="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead"/> is called.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.InterceptedEventArgs.WasContinued">
+            <summary>
+            Gets a value that determines whether <see cref="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead"/> was called by the receiver.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.#ctor(Sulakore.Habbo.Protocol.HMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> class.
+            </summary>
+            <param name="packet">The intercepted data to read/write from.</param>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.#ctor(System.Int32,Sulakore.Habbo.Protocol.HMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> class.
+            </summary>
+            <param name="step">The current count/step/order from which this data was intercepted.</param>
+            <param name="packet">The intercepted data to read/write from.</param>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.#ctor(System.Int32,System.Byte[],Sulakore.Habbo.Protocol.HDestination)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> class.
+            </summary>
+            <param name="step">The current count/step/order from which this data was intercepted.</param>
+            <param name="data">An array of type <see cref="T:System.Byte"/> that contains the data to convert to an <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.</param>
+            <param name="destination">The destination type that will help initialize the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.</param>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.#ctor(System.Func{System.Threading.Tasks.Task},System.Int32,Sulakore.Habbo.Protocol.HMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> class.
+            </summary>
+            <param name="continuation">The <see cref="T:System.Func`1"/> of type <see cref="T:System.Threading.Tasks.Task"/> that will be invoked when <see cref="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead"/> is called.</param>
+            <param name="step">The current count/step/order from which this data was intercepted.</param>
+            <param name="packet">The intercepted data to read/write from.</param>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.#ctor(System.Func{System.Threading.Tasks.Task},System.Int32,System.Byte[],Sulakore.Habbo.Protocol.HDestination)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> class.
+            </summary>
+            <param name="continuation">The <see cref="T:System.Func`1"/> of type <see cref="T:System.Threading.Tasks.Task"/> that will be invoked when <see cref="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead"/> is called.</param>
+            <param name="step">The current count/step/order from which this data was intercepted.</param>
+            <param name="data">An array of type <see cref="T:System.Byte"/> that contains the data to convert to an <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.</param>
+            <param name="destination">The destination type that will help initialize the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.</param>
+        </member>
+        <member name="M:Sulakore.Communication.InterceptedEventArgs.ContinueRead">
+            <summary>
+            Invokes the <see cref="T:System.Func`1"/> of type <see cref="T:System.Threading.Tasks.Task"/> if <see cref="P:Sulakore.Communication.InterceptedEventArgs.IsAsyncCapable"/> is true.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Communication.HConnection">
+            <summary>
+            Represents a connection handler to intercept incoming/outgoing data from a post-shuffle hotel.
+            </summary>
+        </member>
+        <member name="E:Sulakore.Communication.HConnection.Connected">
+            <summary>
+            Occurs when the intercepted local node initiates the handshake with the server.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.OnConnected(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Communication.HConnection.Connected"/> event.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        </member>
+        <member name="E:Sulakore.Communication.HConnection.Disconnected">
+            <summary>
+            Occurs when either client/server have been disconnected, or when <see cref="M:Sulakore.Communication.HConnection.Disconnect"/> has been called if the <see cref="T:Sulakore.Communication.HConnection"/> is currently connected.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.OnDisconnected(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Communication.HConnection.Disconnected"/> event.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        </member>
+        <member name="E:Sulakore.Communication.HConnection.DataIncoming">
+            <summary>
+            Occurs when incoming data from the server has been intercepted.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.OnDataIncoming(Sulakore.Communication.InterceptedEventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Communication.HConnection.DataIncoming"/> event.
+            </summary>
+            <param name="e">An <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> that contains the event data.</param>
+            <returns></returns>
+        </member>
+        <member name="E:Sulakore.Communication.HConnection.DataOutgoing">
+            <summary>
+            Occurs when outgoing data from the client has been intercepted.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.OnDataOutgoing(Sulakore.Communication.InterceptedEventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Communication.HConnection.DataOutgoing"/> event.
+            </summary>
+            <param name="e">An <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> that contains the event data.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.Triggers">
+            <summary>
+            Gets the <see cref="T:Sulakore.Communication.HTriggers"/> that handles the in-game callbacks/events.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.Local">
+            <summary>
+            Gets the <see cref="T:Sulakore.Communication.HNode"/> representing the local connection.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.Remote">
+            <summary>
+            Gets the <see cref="T:Sulakore.Communication.HNode"/> representing the remote connection.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.IsDisposed">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Communication.HConnection"/> has been disposed.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.IsConnected">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Communication.HConnection"/> has established a connection with the game.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.BlockedOutgoing">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IList`1"/> that contains the headers of outgoing packets to block.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.BlockedIncoming">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IList`1"/> that contains the headers of incoming packets to block.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.ReplacedOutgoing">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IDictionary`2"/> that contains the replacement data for an outgoing packet determined by the header.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.ReplacedIncoming">
+            <summary>
+            Gets the <see cref="T:System.Collections.Generic.IDictionary`2"/> that contains the replacement data for an incoming packet determined by the header.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.TotalOutgoing">
+            <summary>
+            Gets the total amount of packets that have been intercepted going to the server.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HConnection.TotalIncoming">
+            <summary>
+            Gets the total amount of packets that have been intercepted going to the client.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.HConnection"/> class.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.Disconnect">
+            <summary>
+            Disconnects all concurrent connections.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.ConnectAsync(System.String,System.Int32)">
+            <summary>
+            Intercepts the attempted connection on the specified port, and establishes a connection with the host in an asynchronous operation.
+            </summary>
+            <param name="host">The host to establish a connection with.</param>
+            <param name="port">The port to intercept the local connection attempt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.SendToServerAsync(System.Byte[])">
+            <summary>
+            Sends data to the remote <see cref="T:Sulakore.Communication.HNode"/> in an asynchronous operation.
+            </summary>
+            <param name="data">The data to send to the node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.SendToServerAsync(System.UInt16,System.Object[])">
+            <summary>
+            Sends data to the remote <see cref="T:Sulakore.Communication.HNode"/> using the specified header, and chunks in an asynchronous operation.
+            </summary>
+            <param name="header">The header to be used for the construction of the packet.</param>
+            <param name="chunks">The chunks/values that the packet will carry.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.SendToClientAsync(System.Byte[])">
+            <summary>
+            Sends data to the local <see cref="T:Sulakore.Communication.HNode"/> in an asynchronous operation.
+            </summary>
+            <param name="data">The data to send to the node.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.SendToClientAsync(System.UInt16,System.Object[])">
+            <summary>
+            Sends data to the local <see cref="T:Sulakore.Communication.HNode"/> using the specified header, and chunks in an asynchronous operation.
+            </summary>
+            <param name="header">The header to be used for the construction of the packet.</param>
+            <param name="chunks">The chunks/values that the packet will carry.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.RestoreHosts">
+            <summary>
+            Removes all lines from the hosts file containing: #Sulakore
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Sulakore.Communication.HConnection"/>.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HConnection.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used by the <see cref="T:Sulakore.Communication.HConnection"/>.
+            </summary>
+            <param name="disposing">The value that determines whether managed resources should be disposed.</param>
+        </member>
+        <member name="T:Sulakore.Communication.HNode">
+            <summary>
+            Represents a wrapper for the <see cref="T:System.Net.Sockets.Socket"/> that allows asynchronous operations using <see cref="T:System.Threading.Tasks.Task"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HNode.Node">
+            <summary>
+            Gets the <see cref="T:System.Net.Sockets.Socket"/> that is being sent data, and receiving data.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HNode.Encrypter">
+            <summary>
+            Gets or sets the <see cref="T:Sulakore.Habbo.Protocol.Encryption.Rc4"/> for encrypting the data being sent.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HNode.Decrypter">
+            <summary>
+            Gets or sets the <see cref="T:Sulakore.Habbo.Protocol.Encryption.Rc4"/> for decrypting the data being received.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HNode.IsDisposed">
+            <summary>
+            Gets or sets the value that determines whether the <see cref="T:Sulakore.Communication.HNode"/> has already been disposed.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.#ctor(System.Net.Sockets.Socket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Communication.HNode"/> class.
+            </summary>
+            <param name="node"></param>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.SendAsync(System.Byte[])">
+            <summary>
+            Sends data to a connected <see cref="T:Sulakore.Communication.HNode"/> in an asynchronous operation.
+            </summary>
+            <param name="buffer">An array of type <see cref="T:System.Byte"/> that contains the data to be sent.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.SendAsync(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Sends data to a connected <see cref="T:Sulakore.Communication.HNode"/> in an asynchronous operation.
+            </summary>
+            <param name="buffer">An array of type <see cref="T:System.Byte"/> that contains the data to send.</param>
+            <param name="offset">The zero-based position in the buffer parameter at which to begin sending data.</param>
+            <param name="size">The number of bytes to send.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.ReceiveAsync">
+            <summary>
+            Receives an array of type <see cref="T:System.Byte"/> that contains data convertible to an <see cref="!:HMessage"/> in an asynchronous operation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.ReceiveAsync(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Receives the specified number of bytes from a bound <see cref="T:Sulakore.Communication.HNode"/> into the specified offset position of the receive buffer in an asynchronous operation.
+            </summary>
+            <param name="buffer">An array of type <see cref="T:System.Byte"/> that is the storage location for received data.</param>
+            <param name="offset">The location in buffer to store the received data.</param>
+            <param name="size">The number of bytes to receive.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.InterceptAsync(System.Int32)">
+            <summary>
+            Returns a <see cref="T:Sulakore.Communication.HNode"/> that was intercepted on the specified port in an asynchronous operation.
+            </summary>
+            <param name="port">The port to listen to for local connection attempts.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.ConnectAsync(System.String,System.Int32)">
+            <summary>
+            Returns a <see cref="T:Sulakore.Communication.HNode"/> connected with the specified host/port in an asynchronous operation.
+            </summary>
+            <param name="host">The host to establish the connection with.</param>
+            <param name="port">The port to establish the connection with.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.Dispose">
+            <summary>
+            Releases all resources used by the <see cref="T:Sulakore.Communication.HNode"/>.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Communication.HNode.Dispose(System.Boolean)">
+            <summary>
+            Releases all resources used by the <see cref="T:Sulakore.Communication.HNode"/>.
+            </summary>
+            <param name="disposing">The value that determines whether managed resources should be disposed.</param>
+        </member>
+        <member name="P:Sulakore.Communication.HTriggers.DetectOutgoing">
+            <summary>
+            Gets or sets a value that determines whether to begin identifying outgoing events.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Communication.HTriggers.DetectIncoming">
+            <summary>
+            Gets or sets a value that determines whether to begin identifying incoming events.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HAction">
+            <summary>
+            Specifies a set of actions a player can perform in-game
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HAction.None">
+            <summary>
+            Represents a player not performing any actions.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HAction.Move">
+            <summary>
+            Represents a moving player.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HAction.Sit">
+            <summary>
+            Represents a player that has sat down.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HAction.Lay">
+            <summary>
+            Represents a player that has laid down.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HAction.Sign">
+            <summary>
+            Represents a player holding up a <see cref="T:Sulakore.Habbo.HSign"/>.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HBan">
+            <summary>
+            Specifies the different types of bans found in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HBan.Hour">
+            <summary>
+            The original value for the packet is RWUAM_BAN_USER_DAY.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HBan.Day">
+            <summary>
+            The original value for the packet is RWUAM_BAN_USER_HOUR.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HBan.Permanent">
+            <summary>
+            The original value for the packet is RWUAM_BAN_USER_PERM.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HDance">
+            <summary>
+            Specifies the different types of dances your player can perform in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDance.None">
+            <summary>
+            Represents a non-dancing player.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDance.Normal">
+            <summary>
+            Represents the default dance any player can perform.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDance.PogoMogo">
+            <summary>
+            Represents the duck funk dance. (HC Only)
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDance.DuckFunk">
+            <summary>
+            Represents the pogo mogo dance. (HC Only).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDance.TheRollie">
+            <summary>
+            Represents the rollie dance. (HC Only)
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HDirection">
+            <summary>
+            Specifies the compass locations of an object/player in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.North">
+            <summary>
+            Represents an object/player facing north.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.NorthEast">
+            <summary>
+            Represents an object/player facing north east.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.East">
+            <summary>
+            Represents an object/player facing east.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.SouthEast">
+            <summary>
+            Represents an object/player facing south east.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.South">
+            <summary>
+            Represents an object/player facing south.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.SouthWest">
+            <summary>
+            Represents an object/player facing south west.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.West">
+            <summary>
+            Represents an object/player facing west.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HDirection.NorthWest">
+            <summary>
+            Represents an object/player facing north west.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HGender">
+            <summary>
+            Specifies the different gender types in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGender.Unknown">
+            <summary>
+            Represents an unidentified player gender.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGender.Male">
+            <summary>
+            Represents a male player.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGender.Female">
+            <summary>
+            Represents a female player.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HGesture">
+            <summary>
+            Specifies a set of gestures a player can perform in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.None">
+            <summary>
+            Represents a player without any gesture.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.Wave">
+            <summary>
+            Represents a player waving.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.BlowKiss">
+            <summary>
+            Represents a player blowing a kiss. (HC Only)
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.Laugh">
+            <summary>
+            Represents a player laughing. (HC Only)
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.Idle">
+            <summary>
+            Represents a player sleeping.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.PogoHop">
+            <summary>
+            Represents a player hopping once. (HC Only)
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HGesture.ThumbsUp">
+            <summary>
+            Represents a player raising a thumbs up.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HModel">
+            <summary>
+            Specifies the different types of room models you can create in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.A">
+            <summary>
+            Represents a room with 104 tiles(8x13).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.B">
+            <summary>
+            Represents a room with 94 tiles((11x10) - (4x4)).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.C">
+            <summary>
+            Represents a room with 36 tiles(6x6).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.D">
+            <summary>
+            Represents a room with 84 tiles(6x14).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.E">
+            <summary>
+            Represents a room with 80 tiles(10x8).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.F">
+            <summary>
+            Represents a room with 84 tiles((10x10) - ((2x4)x2))
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.I">
+            <summary>
+            Represents a room with 416 tiles(16x26).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.J">
+            <summary>
+            Represents a room with 380 tiles((20x22) - (10x6)).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.K">
+            <summary>
+            Represents a room with 448 tiles(((24x26) - (8x10)) - ((8x4)x3)).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.L">
+            <summary>
+            Represents a room with 352 tiles((20x20) - (4x12))
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.M">
+            <summary>
+            Represents a room with 704 tiles((28x28) - (10x8))
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.N">
+            <summary>
+            Represents a room with 368 tiles((20x20) - (8x4)).
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HModel.S">
+            <summary>
+            Represents a room with 35 tiles(5x7).
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HSign">
+            <summary>
+            Specifies the different types of signs found in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Random">
+            <summary>
+            Represents a random sign within the range of (0 - 18)
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Zero">
+            <summary>
+            Represents a sign with an image of the number zero.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.One">
+            <summary>
+            Represents a sign with an image of the number one.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Two">
+            <summary>
+            Represents a sign with an image of the number two.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Three">
+            <summary>
+            Represents a sign with an image of the number three.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Four">
+            <summary>
+            Represents a sign with an image of the number four.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Five">
+            <summary>
+            Represents a sign with an image of the number five.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Six">
+            <summary>
+            Represents a sign with an image of the number six.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Seven">
+            <summary>
+            Represents a sign with an image of the number seven.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Eight">
+            <summary>
+            Represents a sign with an image of the number eight.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Nine">
+            <summary>
+            Represents a sign with an image of the number nine.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Ten">
+            <summary>
+            Represents a sign with an image of the number ten.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Heart">
+            <summary>
+            Represents a sign with an image of a heart.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Skull">
+            <summary>
+            Represents a sign with an image of a skull.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Exclamation">
+            <summary>
+            Represents a sign with an image of a exclamation mark.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Soccerball">
+            <summary>
+            Represents a sign with an image of a soccer ball.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Smiley">
+            <summary>
+            Represents a sign with an image of a smiley face.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Redcard">
+            <summary>
+            Represents a sign with an image of a small red card.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Yellowcard">
+            <summary>
+            Represents a sign with an image of a small yellow card.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSign.Invisible">
+            <summary>
+            Represents a an empty invisible sign with no image.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HSpeech">
+            <summary>
+            Specifies the different types of speech modes that players can communicate with each other in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSpeech.Say">
+            <summary>
+            Represents a speech mode that makes the message publicly visible within a determined range in the room.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSpeech.Shout">
+            <summary>
+            Represents a speech mode that makes the message public to everyone in the room.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HSpeech.Whisper">
+            <summary>
+            Represents a speech mode that only makes the message visible to the specified target regardless of the range.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HStance">
+            <summary>
+            Specifies the state of a player.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HStance.Stand">
+            <summary>
+            Represents a player that is standing.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HStance.Sit">
+            <summary>
+            Represents a player that is sitting.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HStance.Lay">
+            <summary>
+            Represents a player that is laying down.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HTheme">
+            <summary>
+            Specifies the different types of speech bubble themes found in-game.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Random">
+            <summary>
+            Represents a random speech bubble consisting of:
+            <para><see cref="F:Sulakore.Habbo.HTheme.White"/>, <see cref="F:Sulakore.Habbo.HTheme.Red"/>, <see cref="F:Sulakore.Habbo.HTheme.Blue"/>, <see cref="F:Sulakore.Habbo.HTheme.Yellow"/>, <see cref="F:Sulakore.Habbo.HTheme.Green"/>, <see cref="F:Sulakore.Habbo.HTheme.Black"/></para>
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.White">
+            <summary>
+            Represents the default(white) speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Red">
+            <summary>
+            Represents the red speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Blue">
+            <summary>
+            Represents the blue speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Yellow">
+            <summary>
+            Represents the yellow speech bubble.
+            </summary>
+            
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Green">
+            <summary>
+            Represents the green speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Black">
+            <summary>
+            Represents the black speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Ice">
+            <summary>
+            Represents the light-blue(ice) speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Pink">
+            <summary>
+            Represents the pink speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Purple">
+            <summary>
+            Represents the purple speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Gold">
+            <summary>
+            Represents the gold speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Turquoise">
+            <summary>
+            Represents the turquoise speech bubble.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Hearts">
+            <summary>
+            Represents a speech bubble with hearts in the background.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Roses">
+            <summary>
+            Represents a speech bubble with roses in the background.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Pig">
+            <summary>
+            Represents a speech bubble with a pig in the background.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Dog">
+            <summary>
+            Represents a speech bubble with a dog in the background.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.HTheme.Swords">
+            <summary>
+            Represents a speech bubble with swords in the background.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.HEntityAction">
+            <summary>
+            Represents an <see cref="T:Sulakore.Habbo.IHEntity"/> performing actions.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.Index">
+            <summary>
+            Gets the room index value of the <see cref="T:Sulakore.Habbo.IHEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.IsEmpowered">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Habbo.IHEntity"/> has privileges.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.Tile">
+            <summary>
+            Gets the <see cref="T:Sulakore.Habbo.HPoint"/> of where the <see cref="T:Sulakore.Habbo.IHEntity"/> is currently on.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.MovingTo">
+            <summary>
+            Gets the <see cref="T:Sulakore.Habbo.HPoint"/> of where the <see cref="T:Sulakore.Habbo.IHEntity"/> will move to next.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.Sign">
+            <summary>
+            Gets the <see cref="T:Sulakore.Habbo.HSign"/> that the <see cref="T:Sulakore.Habbo.IHEntity"/> has raised.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.Stance">
+            <summary>
+            Gets the current <see cref="T:Sulakore.Habbo.HStance"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.LastAction">
+            <summary>
+            Gets the <see cref="T:Sulakore.Habbo.HAction"/> that the <see cref="T:Sulakore.Habbo.IHEntity"/> has recently done.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.HeadDirection">
+            <summary>
+            Gets the head <see cref="T:Sulakore.Habbo.HDirection"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntityAction.BodyDirection">
+            <summary>
+            Gets the body <see cref="T:Sulakore.Habbo.HDirection"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntityAction.#ctor(System.Boolean,System.Int32,Sulakore.Habbo.HPoint,Sulakore.Habbo.HPoint,Sulakore.Habbo.HSign,Sulakore.Habbo.HStance,Sulakore.Habbo.HDirection,Sulakore.Habbo.HDirection,Sulakore.Habbo.HAction)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Habbo.HEntityAction"/> class with the specified information.
+            </summary>
+            <param name="isEmpowered">The value that determines whether the <see cref="T:Sulakore.Habbo.IHEntity"/> has privileges.</param>
+            <param name="index">The room index value of the <see cref="T:Sulakore.Habbo.IHEntity"/>.</param>
+            <param name="tile">The <see cref="T:Sulakore.Habbo.HPoint"/> of where the <see cref="T:Sulakore.Habbo.IHEntity"/> is currently on.</param>
+            <param name="movingTo">The <see cref="T:Sulakore.Habbo.HPoint"/> of where the <see cref="T:Sulakore.Habbo.IHEntity"/> will move to next.</param>
+            <param name="sign">The <see cref="T:Sulakore.Habbo.HSign"/> that the <see cref="T:Sulakore.Habbo.IHEntity"/> has raised.</param>
+            <param name="stance">The current <see cref="T:Sulakore.Habbo.HStance"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>.</param>
+            <param name="headDirection">The <see cref="T:Sulakore.Habbo.HDirection"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>'s head.</param>
+            <param name="bodyDirection">The <see cref="T:Sulakore.Habbo.HDirection"/> of the <see cref="T:Sulakore.Habbo.IHEntity"/>'s body.</param>
+            <param name="lastAction">The <see cref="T:Sulakore.Habbo.HAction"/> that the <see cref="T:Sulakore.Habbo.IHEntity"/> has recently done.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntityAction.Parse(Sulakore.Habbo.Protocol.HMessage)">
+            <summary>
+            Returns a <see cref="T:System.Collections.Generic.IReadOnlyList`1"/> of type <see cref="T:Sulakore.Habbo.HEntityAction"/> found in the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+            <param name="packet">The <see cref="T:Sulakore.Habbo.Protocol.HMessage"/> that contains the <see cref="T:Sulakore.Habbo.HEntityAction"/> data to parse.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntityAction.ToString">
+            <summary>
+            Converts the <see cref="T:Sulakore.Habbo.HEntityAction"/> to a human-readable string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sulakore.Habbo.HEntity">
+            <summary>
+            Represents an in-game object that provides special information that makes it unique in a room.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Id">
+            <summary>
+            Gets the id of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Index">
+            <summary>
+            Gets the room index value of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Name">
+            <summary>
+            Gets the name of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Motto">
+            <summary>
+            Gets the motto of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.FigureId">
+            <summary>
+            Gets the figure id of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.FavoriteGroup">
+            <summary>
+            Gets the favorite group badge of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Tile">
+            <summary>
+            Gets the <see cref="T:Sulakore.Habbo.HPoint"/> of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HEntity.Gender">
+            <summary>
+            Gets the gender of the <see cref="T:Sulakore.Habbo.HEntity"/>.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntity.#ctor(System.Int32,System.Int32,System.String,Sulakore.Habbo.HPoint,System.String,Sulakore.Habbo.HGender,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Habbo.HEntity"/> class with the specified information,
+            </summary>
+            <param name="id">The id of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="index">The room index value of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="name">The name of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="tile">The <see cref="T:Sulakore.Habbo.HPoint"/> of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="motto">The motto of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="gender">The <see cref="T:Sulakore.Habbo.HGender"/> of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="figureId">The figure id of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+            <param name="favoriteGroup">The favorite group badge of the <see cref="T:Sulakore.Habbo.HEntity"/>.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntity.Parse(Sulakore.Habbo.Protocol.HMessage)">
+            <summary>
+            Returns a <see cref="T:System.Collections.Generic.IReadOnlyList`1"/> of type <see cref="T:Sulakore.Habbo.HEntity"/> found in the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+            <param name="packet">The <see cref="T:Sulakore.Habbo.Protocol.HMessage"/> that contains the <see cref="T:Sulakore.Habbo.HEntity"/> data to parse.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.HEntity.ToString">
+            <summary>
+            Converts the <see cref="T:Sulakore.Habbo.HEntity"/> to a human-readable string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sulakore.Habbo.HPoint">
+            <summary>
+            Represents a floor object's in-game position relative to the map's three-dimensional plane.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HPoint.X">
+            <summary>
+            Gets or sets the x-coordinate of the <see cref="T:Sulakore.Habbo.HPoint"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HPoint.Y">
+            <summary>
+            Gets or sets the y-coordinate of the <see cref="T:Sulakore.Habbo.HPoint"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.HPoint.Z">
+            <summary>
+            Gets or sets the z-coordinate of the <see cref="T:Sulakore.Habbo.HPoint"/>.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.HPoint.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Habbo.HPoint"/> class with the specified floor object coordinates.
+            </summary>
+            <param name="x">The horizontal position of the floor object.</param>
+            <param name="y">The vertical position of the floor object.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.HPoint.#ctor(System.Int32,System.Int32,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sulakore.Habbo.HPoint"/> class with the specified floor object coordinates.
+            </summary>
+            <param name="x">The horizontal position of the floor object.</param>
+            <param name="y">The vertical position of the floor object.</param>
+            <param name="z">The elevated position of the floor object.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.HPoint.ToString">
+            <summary>
+            Converts the <see cref="T:Sulakore.Habbo.HPoint"/> to a human-readable string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sulakore.Habbo.IHEntity">
+            <summary>
+            Represents an in-game object that provides a unique identifier relative to the room.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.IHEntity.Index">
+            <summary>
+            Gets the room index value of the <see cref="T:Sulakore.Habbo.IHEntity"/>.
+            </summary>
+        </member>
+        <member name="T:Sulakore.Habbo.Protocol.Encryption.BigInteger">
+            <summary>
+            Represents a large number.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.BigInteger.DataLength">
+            <summary>
+            Number of characters used.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.BigInteger.PrimesBelow2000">
+            <summary>
+            Contains a list of primes that are under 2000.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor">
+            <summary>
+            Initializes a new instance of the BigInteger class with the default value of 0.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="value">The long value to initialize the instance with.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.UInt64)">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="value">The ulong value to initialize the instance with.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="bigInteger">The BigInteger value to initialize the instance with.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="value">The string value to initialize the instance with the provided base.</param>
+            <param name="radix">The int value that dictates the base of the provided System.String.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.Byte[])">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="data">The byte array value to initialize the instance with.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.Byte[],System.Int32)">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="data">The byte array value to initialize the instance with.</param>
+            <param name="length">The int value that specifies the length to use for the provided byte array.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.#ctor(System.UInt32[])">
+            <summary>
+            Initializes a new instance of the BigInteger class.
+            </summary>
+            <param name="data">The uint array value to initialize the instance with.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ToString(System.Int32)">
+            <summary>
+            Returns a string that represents the current object in the specified base.
+            </summary>
+            <param name="radix">The base type of the string representation of the current object.</param>
+            <returns>A string that represents the current object in the specified base.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ToHexString">
+            <summary>
+            Returns a hex string showing the contents of the current instance.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ModPow(Sulakore.Habbo.Protocol.Encryption.BigInteger,Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Modulo Exponentiation.
+            </summary>
+            <param name="exponent"></param>
+            <param name="modulus"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.BarrettReduction(Sulakore.Habbo.Protocol.Encryption.BigInteger,Sulakore.Habbo.Protocol.Encryption.BigInteger,Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Fast calculation of modular reduction using Barrett's reduction.
+            </summary>
+            <param name="x"></param>
+            <param name="n"></param>
+            <param name="constant"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.Gcd(Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Returns the greatest common denominator against the specified BigInteger instance.
+            </summary>
+            <param name="bi">The BigInteger instance to use with the current instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.GenRandomBits(System.Int32,System.Random)">
+            <summary>
+            Populates the current instance with the specified amount of random bytes.
+            </summary>
+            <param name="bits">The amount of bits to populate the current instance.</param>
+            <param name="rand">The System.Random instance to generate the random bytes.</param>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.BitCount">
+            <summary>
+            Returns the position of the most significant bit in the current instance.
+            </summary>
+            <returns>the most significant bit</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.RabinMillerTest(System.Int32)">
+            <summary>
+            Probabilistic prime test based on Rabin-Miller's test.
+            </summary>
+            <param name="confidence">The amount of times/iterations to check the primality of the current instance.</param>
+            <returns>true if the current instance is a strong pseudo-prime to randomly chosen bases, otherwise false if not prime.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.IsProbablePrime(System.Int32)">
+            <summary>
+            Determines whether a number is probably prime using the Rabin-Miller's test.
+            </summary>
+            <param name="confidence">The amount of times/iterations to check the primality of the current instance.</param>
+            <returns>true if the instance has a large probability of being prime, otherwise false.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.IsProbablePrime">
+            <summary>
+            Determines whether this BigInteger is probably prime using a combination of base 2 strong pseudo-prime tests, and Lucas strong pseudo-prime tests.
+            </summary>
+            <returns>true if the instance has a large probability of being prime, otherwise false.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.IntValue">
+            <summary>
+            Returns the lowest System.Int32 from the byte array of the current instance. (4 bytes)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.Jacobi(Sulakore.Habbo.Protocol.Encryption.BigInteger,Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Returns the Jacobi symbol for the provided BigInteger values.
+            </summary>
+            <param name="a">The BigInteger value to use with the calculation.</param>
+            <param name="b">The BigInteger value to use with the calculation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.GenPseudoPrime(System.Int32,System.Int32,System.Random)">
+            <summary>
+            Returns a positive BigInteger that is probably prime.
+            </summary>
+            <param name="bits">The bit size of the number you wish to generate.</param>
+            <param name="confidence">The amount of times/iterations to check the primality of the generated number.</param>
+            <param name="rand">The System.Random instance to extract pseudo values to contribute to the probable prime number.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ModInverse(Sulakore.Habbo.Protocol.Encryption.BigInteger)">
+            <summary>
+            Returns the modulo inverse of the current instance against the provided modulus parameter.
+            </summary>
+            <param name="modulus">The modulus needed for the calculation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ToBytes">
+            <summary>
+            Returns this instance in a byte array, the lowest index contains the most smallest byte.
+            </summary>
+            <returns>the byte array</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.Sqrt">
+            <summary>
+            Returns the square root of this instance.
+            </summary>
+            <returns>the square root</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.ToString">
+            <summary>
+            Returns a string that represents the current object in base 10.
+            </summary>
+            <returns>A string that represents the current object in base 10.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+            <returns>A hash code for the current System.Object.</returns>
+        </member>
+        <member name="M:Sulakore.Habbo.Protocol.Encryption.BigInteger.Equals(System.Object)">
+            <summary>
+            Determines whether the specified System.Object is equal to the current System.Object.
+            </summary>
+            <param name="obj">The object to compare with the current object.</param>
+            <returns>true if the specified System.Object is equal to the current System.Object; otherwise, false.</returns>
+        </member>
+        <member name="F:Sulakore.Habbo.Protocol.Encryption.Padding.MaxByte">
+            <summary>
+            Represents a padding type that will attempt to fill a byte array with the maximum value of a <see cref="T:System.Byte"/>.
+            </summary>
+        </member>
+        <member name="F:Sulakore.Habbo.Protocol.Encryption.Padding.RandomByte">
+            <summary>
+            Represents a padding type that will attempt to fill a byte array with random bytes in the range of 1 - 255.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.BlockSize">
+            <summary>
+            Gets the block size of the <see cref="T:Sulakore.Habbo.Protocol.Encryption.RsaKey"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.E">
+            <summary>
+            Public Exponent
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.N">
+            <summary>
+            Public Modulus
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.D">
+            <summary>
+            Private Exponent
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.P">
+            <summary>
+            Secret Prime Factor (P * Q = N)
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.Q">
+            <summary>
+            Secret Prime Factor (P * Q = N)
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.Dmp1">
+            <summary>
+            D Mod (P - 1)
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.Dmq1">
+            <summary>
+            D Mod (Q - 1)
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.Iqmp">
+            <summary>
+            (Inverse)Q Mod P
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.CanEncrypt">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Habbo.Protocol.Encryption.RsaKey"/> can encrypt data.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.CanDecrypt">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Habbo.Protocol.Encryption.RsaKey"/> can decrypt data.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.Encryption.RsaKey.IsDisposed">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Habbo.Protocol.Encryption.RsaKey"/> has already been disposed.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.Header">
+            <summary>
+            Gets or sets the header of the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.Position">
+            <summary>
+            Gets or sets the position that determines where to begin the next read/write operation in the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.Destination">
+            <summary>
+            Gets or sets the <see cref="T:Sulakore.Habbo.Protocol.HDestination"/> for the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.IsCorrupted">
+            <summary>
+            Gets a value that determines whether the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/> is readable/writable.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.Length">
+            <summary>
+            Gets the length of the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.Body">
+            <summary>
+            Gets the block of data considered as the body of the packet that excludes the header.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.ValuesRead">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyList`1"/> of type <see cref="T:System.Object"/> containing read values from the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="P:Sulakore.Habbo.Protocol.HMessage.ValuesWritten">
+            <summary>
+            Gets a <see cref="T:System.Collections.Generic.IReadOnlyList`1"/> of type <see cref="T:System.Object"/> containing the written values of the <see cref="T:Sulakore.Habbo.Protocol.HMessage"/>.
+            </summary>
+        </member>
+        <member name="E:Sulakore.Habbo.Web.HSession.Connected">
+            <summary>
+            Occurs when the connection to the remote <see cref="T:Sulakore.Communication.HNode"/> has been established.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Web.HSession.OnConnected(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Habbo.Web.HSession.Connected"/> event.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        </member>
+        <member name="E:Sulakore.Habbo.Web.HSession.Disconnected">
+            <summary>
+            Occurs when either client/server have been disconnected, or when <see cref="M:Sulakore.Habbo.Web.HSession.Disconnect"/> has been called if the <see cref="T:Sulakore.Communication.HConnection"/> is currently connected.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Web.HSession.OnDisconnected(System.EventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Habbo.Web.HSession.Disconnected"/> event.
+            </summary>
+            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
+        </member>
+        <member name="E:Sulakore.Habbo.Web.HSession.DataIncoming">
+            <summary>
+            Occurs when incoming data from the server has been intercepted.
+            </summary>
+        </member>
+        <member name="M:Sulakore.Habbo.Web.HSession.OnDataIncoming(Sulakore.Communication.InterceptedEventArgs)">
+            <summary>
+            Raises the <see cref="E:Sulakore.Habbo.Web.HSession.DataIncoming"/> event.
+            </summary>
+            <param name="e">An <see cref="T:Sulakore.Communication.InterceptedEventArgs"/> that contains the event data.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Sulakore.HHotel">
+            <summary>
+            Specifies the list of hotels currently being supported.
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Unknown">
+            <summary>
+            Represents an unidentified hotel.
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Com">
+            <summary>
+            Represents http://www.Habbo.com (Global).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.ComBr">
+            <summary>
+            Represents http://www.Habbo.com.br (Brazil).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.ComTr">
+            <summary>
+            Represents http://www.Habbo.com.tr (Turkey).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.De">
+            <summary>
+            Represents http://www.Habbo.de (Germany).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Es">
+            <summary>
+            Represents http://www.Habbo.es (Spain).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Fi">
+            <summary>
+            Represents http://www.Habbo.fi (Finland).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Fr">
+            <summary>
+            Represents http://www.Habbo.fr (France).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.It">
+            <summary>
+            Represents http://www.Habbo.it (Italy).
+            </summary>
+        </member>
+        <member name="F:Sulakore.HHotel.Nl">
+            <summary>
+            Represents http://www.Habbo.nl (Netherlands).
+            </summary>
+        </member>
+        <member name="T:Sulakore.SKore">
+            <summary>
+            Provides static methods for extracting public information from a hotel.
+            </summary>
+        </member>
+        <member name="M:Sulakore.SKore.GetIPCookieAsync(Sulakore.HHotel)">
+            <summary>
+            Returns your external Internet Protocol (IP) address that is required to successfully send GET/POST request to the specified <seealso cref="T:Sulakore.HHotel"/> in an asynchronous operation.
+            </summary>
+            <param name="hotel">The hotel you wish to retrieve the cookie containing your external Internet Protocol (IP) address from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.GetUserAsync(System.String,Sulakore.HHotel)">
+            <summary>
+            Returns the <seealso cref="T:Sulakore.Habbo.Web.HUser"/> from the specified hotel associated with the given name in an asynchronous operation.
+            </summary>
+            <param name="name">The name of the player you wish to retrieve the <seealso cref="T:Sulakore.Habbo.Web.HUser"/> from.</param>
+            <param name="hotel">The <seealso cref="T:Sulakore.HHotel"/> that the target user is located on.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.GetUniqueIdAsync(System.String,Sulakore.HHotel)">
+            <summary>
+            Returns the unique identifier from the specified <seealso cref="T:Sulakore.HHotel"/> associated with the given name in an asynchronous operation.
+            </summary>
+            <param name="name">The name of the player you wish to retrieve the unique identifier from.</param>
+            <param name="hotel">The <seealso cref="T:Sulakore.HHotel"/> that the target user is located on.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.GetProfileAsync(System.String,Sulakore.HHotel)">
+            <summary>
+            Returns the <seealso cref="T:Sulakore.Habbo.Web.HProfile"/> from the specified hotel associated with the given unique identifier in an asynchronous operation.
+            </summary>
+            <param name="uniqueId">The unique identifier of the player you wish to retrieve the <see cref="T:Sulakore.Habbo.Web.HProfile"/> from.</param>
+            <param name="hotel">The <seealso cref="T:Sulakore.HHotel"/> that the target user is located on.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.Juice(Sulakore.Habbo.HSign)">
+            <summary>
+            Returns the primitive value for the specified <see cref="T:Sulakore.Habbo.HSign"/>.
+            </summary>
+            <param name="sign">The <see cref="T:Sulakore.Habbo.HSign"/> you wish to retrieve the primitive value from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.Juice(Sulakore.Habbo.HBan)">
+            <summary>
+            Returns the primitive value for the specified <see cref="T:Sulakore.Habbo.HBan"/>.
+            </summary>
+            <param name="ban">The <see cref="T:Sulakore.Habbo.HBan"/> you wish to retrieve the primitive value from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.Juice(Sulakore.Habbo.HTheme)">
+            <summary>
+            Returns the primitive value for the specified <see cref="T:Sulakore.Habbo.HTheme"/>.
+            </summary>
+            <param name="theme">The <see cref="T:Sulakore.Habbo.HTheme"/> you wish to retrieve the primitive value from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.ToUrl(Sulakore.HHotel)">
+            <summary>
+            Returns the full URL representation of the specified <seealso cref="T:Sulakore.HHotel"/>.
+            </summary>
+            <param name="hotel">The <seealso cref="T:Sulakore.HHotel"/> you wish to retrieve the full URL from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.ToDomain(Sulakore.HHotel)">
+            <summary>
+            Returns the domain associated with the specified <see cref="T:Sulakore.HHotel"/>.
+            </summary>
+            <param name="hotel">The <see cref="T:Sulakore.HHotel"/> that is associated with the wanted domain.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.ToBan(System.String)">
+            <summary>
+            Returns the <see cref="T:Sulakore.Habbo.HBan"/> associated with the specified value.
+            </summary>
+            <param name="ban">The string representation of the <see cref="T:Sulakore.Habbo.HBan"/> object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.ToHotel(System.String)">
+            <summary>
+            Returns the <see cref="T:Sulakore.HHotel"/> associated with the specified value.
+            </summary>
+            <param name="value">The string representation of the <see cref="T:Sulakore.HHotel"/> object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.ToGender(System.String)">
+            <summary>
+            Returns the <see cref="T:Sulakore.Habbo.HGender"/> associated with the specified value.
+            </summary>
+            <param name="gender">The string representation of the <see cref="T:Sulakore.Habbo.HGender"/> object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.Unsubscribe``1(System.EventHandler{``0}@)">
+            <summary>
+            Iterates through an event's list of subscribed delegates, and begins to unsubscribe them from the event.
+            </summary>
+            <typeparam name="T">The type of the event handler.</typeparam>
+            <param name="eventHandler">The event handler to unsubscribe the subscribed delegates from.</param>
+        </member>
+        <member name="M:Sulakore.SKore.GetChild(System.String,System.String)">
+            <summary>
+            Returns a new string that begins from where the parent ended in the source.
+            </summary>
+            <param name="source">The string that is to be processed.</param>
+            <param name="parent">The string that determines where the substring operation will take place.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.GetChild(System.String,System.String,System.Char)">
+            <summary>
+            Returns a new string that is in between the parent and the delimiter in the source.
+            </summary>
+            <param name="source">The string that is to be processed.</param>
+            <param name="parent">The string that determines where the substring operation will take place.</param>
+            <param name="delimiter">The Unicode character that will be used to delimit the substring.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sulakore.SKore.GetChilds(System.String,System.String,System.Char,System.Boolean)">
+            <summary>Returns a string array that contains the substrings in the source that are delimited after the parent.
+            </summary>
+            <param name="source">The string that is to be processed.</param>
+            <param name="parent">The string that determines where the substring operation will take place.</param>
+            <param name="delimiter">The Unicode character that will be used to delimit the substring.</param>
+            <param name="withNested">True if you wish to... actually, I forgot why I did this, you'll be fine with the default setting.<para>hhhhh</para></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
