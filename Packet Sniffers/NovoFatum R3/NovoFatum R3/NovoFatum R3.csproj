@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{72B43881-F2C0-4A48-96ED-9B982DF02D78}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NovoFatum_R3</RootNamespace>
+    <AssemblyName>NovoFatum R3</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>NovoFatum R3.ico</ApplicationIcon>
+    <StartupObject>Class32</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FiddlerCore4">
+      <HintPath>..\..\NovoFatum R3\FiddlerCore4.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginInterface">
+      <HintPath>..\..\NovoFatum R3\PluginInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="RSAKey">
+      <HintPath>..\..\NovoFatum R3\RSAKey.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.13\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Advanced.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Advanced.Designer.cs">
+      <DependentUpon>Advanced.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AlertError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlertError.Designer.cs">
+      <DependentUpon>AlertError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Animation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Animation.Designer.cs">
+      <DependentUpon>Animation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Auto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auto.Designer.cs">
+      <DependentUpon>Auto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Categories.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Categories.Designer.cs">
+      <DependentUpon>Categories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Changes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Changes.Designer.cs">
+      <DependentUpon>Changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Class0.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class10.cs" />
+    <Compile Include="Class11.cs" />
+    <Compile Include="Class12.cs" />
+    <Compile Include="Class13.cs" />
+    <Compile Include="Class14.cs" />
+    <Compile Include="Class15.cs" />
+    <Compile Include="Class16.cs" />
+    <Compile Include="Class17.cs" />
+    <Compile Include="Class18.cs" />
+    <Compile Include="Class19.cs" />
+    <Compile Include="Class2.cs" />
+    <Compile Include="Class20.cs" />
+    <Compile Include="Class21.cs" />
+    <Compile Include="Class22.cs" />
+    <Compile Include="Class23.cs" />
+    <Compile Include="Class24.cs" />
+    <Compile Include="Class25.cs" />
+    <Compile Include="Class26.cs" />
+    <Compile Include="Class27.cs" />
+    <Compile Include="Class28.cs" />
+    <Compile Include="Class29.cs" />
+    <Compile Include="Class3.cs" />
+    <Compile Include="Class30.cs" />
+    <Compile Include="Class31.cs" />
+    <Compile Include="Class32.cs" />
+    <Compile Include="Class33.cs" />
+    <Compile Include="Class33.Designer.cs">
+      <DependentUpon>Class33.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Class34.cs" />
+    <Compile Include="Class4.cs" />
+    <Compile Include="Class5.cs" />
+    <Compile Include="Class6.cs" />
+    <Compile Include="Class7.cs" />
+    <Compile Include="Class8.cs" />
+    <Compile Include="Class9.cs" />
+    <Compile Include="Connection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Connection.Designer.cs">
+      <DependentUpon>Connection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Desktop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Desktop.Designer.cs">
+      <DependentUpon>Desktop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Easy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Easy.Designer.cs">
+      <DependentUpon>Easy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExpertMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExpertMode.Designer.cs">
+      <DependentUpon>ExpertMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GClass0.cs" />
+    <Compile Include="GClass1.cs" />
+    <Compile Include="GClass2.cs" />
+    <Compile Include="GClass3.cs" />
+    <Compile Include="GClass4.cs" />
+    <Compile Include="HabboEncoding_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HabboEncoding_Form.Designer.cs">
+      <DependentUpon>HabboEncoding_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InjectionTools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InjectionTools.Designer.cs">
+      <DependentUpon>InjectionTools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstalledApps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstalledApps.Designer.cs">
+      <DependentUpon>InstalledApps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntraChat_LOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntraChat_LOGIN.Designer.cs">
+      <DependentUpon>IntraChat_LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LittleJMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LittleJMode.Designer.cs">
+      <DependentUpon>LittleJMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LittleJMode_AddTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LittleJMode_AddTimer.Designer.cs">
+      <DependentUpon>LittleJMode_AddTimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Manage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Manage.Designer.cs">
+      <DependentUpon>Manage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NormalMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NormalMode.Designer.cs">
+      <DependentUpon>NormalMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NovoFatum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NovoFatum.Designer.cs">
+      <DependentUpon>NovoFatum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Packetlogger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Packetlogger.Designer.cs">
+      <DependentUpon>Packetlogger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Search.Designer.cs">
+      <DependentUpon>Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Started.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Started.Designer.cs">
+      <DependentUpon>Started.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tamper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tamper.Designer.cs">
+      <DependentUpon>Tamper.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Advanced.resources" />
+    <EmbeddedResource Include="AlertError.resources" />
+    <EmbeddedResource Include="Animation.resources" />
+    <EmbeddedResource Include="Auto.resources" />
+    <EmbeddedResource Include="Categories.resources" />
+    <EmbeddedResource Include="Changes.resources" />
+    <EmbeddedResource Include="Connection.resources" />
+    <EmbeddedResource Include="Desktop.resources" />
+    <EmbeddedResource Include="Easy.resources" />
+    <EmbeddedResource Include="ExpertMode.resources" />
+    <EmbeddedResource Include="HabboEncoding_Form.resources" />
+    <EmbeddedResource Include="InjectionTools.resources" />
+    <EmbeddedResource Include="InstalledApps.resources" />
+    <EmbeddedResource Include="IntraChat_LOGIN.resources" />
+    <EmbeddedResource Include="LittleJMode.resources" />
+    <EmbeddedResource Include="LittleJMode_AddTimer.resources" />
+    <EmbeddedResource Include="Main.resources" />
+    <EmbeddedResource Include="MainWindow.resources" />
+    <EmbeddedResource Include="Manage.resources" />
+    <EmbeddedResource Include="NormalMode.resources" />
+    <EmbeddedResource Include="NovoFatum.resources" />
+    <EmbeddedResource Include="Packetlogger.resources" />
+    <EmbeddedResource Include="Properties\Resources.resources" />
+    <EmbeddedResource Include="Search.resources" />
+    <EmbeddedResource Include="Started.resources" />
+    <EmbeddedResource Include="Tamper.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+    <None Include="Class33.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Class33.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
